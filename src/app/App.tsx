@@ -594,7 +594,16 @@ export default function App() {
                         detailRow.status === '予定' ? 'bg-blue-500' :
                         detailRow.status === '失敗' ? 'bg-red-500' : 'bg-gray-400'
                       }`} />
-                      {detailRow.status}
+                      <span
+                        className="underline cursor-default"
+                        onMouseEnter={(e) => showTooltip(
+                          detailRow.status === '完了' ? '精算金のお支払いが完了しました。' :
+                          detailRow.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
+                          detailRow.status === '失敗' ? '(실패 사유)' : detailRow.status,
+                          e
+                        )}
+                        onMouseLeave={() => setTooltip(null)}
+                      >{detailRow.status}</span>
                     </span>
                   </div>
                 </div>
