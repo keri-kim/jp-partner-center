@@ -191,7 +191,10 @@ export default function App() {
   const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number; align?: 'center' | 'right' } | null>(null);
   const showTooltip = (text: string, e: React.MouseEvent, align?: 'center' | 'right') => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    setTooltip({ text, x: rect.left + rect.width / 2, y: rect.top, align });
+    const x = align === 'right'
+      ? window.innerWidth - rect.right
+      : rect.left + rect.width / 2;
+    setTooltip({ text, x, y: rect.top, align });
   };
 
   // Filters
@@ -698,10 +701,16 @@ export default function App() {
       {tooltip && (
         <div
           className="fixed z-[200] bg-foreground text-background text-[14px] rounded-md px-[10px] py-[6px] pointer-events-none shadow-md"
-          style={{
+          style={tooltip.align === 'right' ? {
+            right: tooltip.x,
+            top: tooltip.y - 8,
+            transform: 'translate(0, -100%)',
+            whiteSpace: 'pre-line',
+            maxWidth: '220px',
+          } : {
             left: tooltip.x,
             top: tooltip.y - 8,
-            transform: tooltip.align === 'right' ? 'translate(-100%, -100%)' : 'translate(-50%, -100%)',
+            transform: 'translate(-50%, -100%)',
             whiteSpace: 'pre-line',
             maxWidth: '220px',
           }}
