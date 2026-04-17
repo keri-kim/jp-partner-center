@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { DateRange } from 'react-day-picker';
 import { parse, isWithinInterval, startOfDay, endOfDay } from 'date-fns';
-import svgPaths from '../imports/청구내역/svg-3b1x6j567m';
-import drawerSvgPaths from '../imports/수기조정Cps/svg-vpil53h6zm';
+import svgPaths from '../imports/billing-list/svg-3b1x6j567m';
+import drawerSvgPaths from '../imports/manual-adjustment/svg-vpil53h6zm';
 import DateRangePicker from './components/DateRangePicker';
 import logoJp from '../assets/logo-jp.png';
 
