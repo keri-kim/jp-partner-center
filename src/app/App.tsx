@@ -499,7 +499,7 @@ export default function App() {
                         onMouseEnter={(e) => showTooltip(
                           row.status === '完了' ? '精算金のお支払いが完了しました。' :
                           row.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
-                          row.status === '失敗' ? (row.failureReason ?? '失敗') : row.status,
+                          row.status === '失敗' ? '(실패 사유)' : row.status,
                           e
                         )}
                         onMouseLeave={() => setTooltip(null)}
