@@ -33,6 +33,7 @@ interface AppPaymentRow {
   productName?: string;
   productOriginalPrice?: string;
   productSalePrice?: string;
+  failureReason?: string;
 }
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
@@ -132,6 +133,7 @@ const initialAppPaymentData: AppPaymentRow[] = [
     productName: '(60604) フルフェイスフィラー',
     productOriginalPrice: '￥80,000',
     productSalePrice: '￥75,000',
+    failureReason: 'カード決済の承認が拒否されました。',
   },
   {
     id: '5',
@@ -332,6 +334,27 @@ export default function App() {
           <div className="px-[32px] py-[16px]">
             <div className="flex flex-wrap gap-[8px] mb-[8px]">
 
+              {/* 日付フィルター */}
+              <div className="flex">
+                <div className="relative">
+                  <select
+                    className="h-[40px] w-[120px] px-[12px] pr-[32px] bg-input-background border border-border rounded-l-md appearance-none text-sm"
+                    value={dateType}
+                    onChange={(e) => setDateType(e.target.value)}
+                  >
+                    <option>決済日</option>
+                    <option>利用処理日</option>
+                    <option>支払日</option>
+                  </select>
+                  <div className="absolute right-[12px] top-1/2 -translate-y-1/2 pointer-events-none w-[16px] h-[16px]">
+                    <svg className="w-full h-full" fill="none" viewBox="0 0 11.8748 8">
+                      <path d={svgPaths.p5044900} fill="currentColor" className="text-muted-foreground" />
+                    </svg>
+                  </div>
+                </div>
+                <DateRangePicker value={dateRange} onChange={setDateRange} />
+              </div>
+
               {/* ステータス */}
               <div ref={statusDropdownRef} className="relative">
                 <button
@@ -368,27 +391,6 @@ export default function App() {
                     ))}
                   </div>
                 )}
-              </div>
-
-              {/* 日付フィルター */}
-              <div className="flex">
-                <div className="relative">
-                  <select
-                    className="h-[40px] w-[120px] px-[12px] pr-[32px] bg-input-background border border-border rounded-l-md appearance-none text-sm"
-                    value={dateType}
-                    onChange={(e) => setDateType(e.target.value)}
-                  >
-                    <option>決済日</option>
-                    <option>利用処理日</option>
-                    <option>支払日</option>
-                  </select>
-                  <div className="absolute right-[12px] top-1/2 -translate-y-1/2 pointer-events-none w-[16px] h-[16px]">
-                    <svg className="w-full h-full" fill="none" viewBox="0 0 11.8748 8">
-                      <path d={svgPaths.p5044900} fill="currentColor" className="text-muted-foreground" />
-                    </svg>
-                  </div>
-                </div>
-                <DateRangePicker value={dateRange} onChange={setDateRange} />
               </div>
 
               {/* ID 検索 */}
@@ -492,7 +494,16 @@ export default function App() {
                         row.status === '予定' ? 'bg-blue-500' :
                         row.status === '失敗' ? 'bg-red-500' : 'bg-gray-400'
                       }`} />
-                      {row.status}
+                      <span
+                        className="underline cursor-default"
+                        onMouseEnter={(e) => showTooltip(
+                          row.status === '完了' ? '精算金のお支払いが完了しました。' :
+                          row.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
+                          row.status === '失敗' ? (row.failureReason ?? '失敗') : row.status,
+                          e
+                        )}
+                        onMouseLeave={() => setTooltip(null)}
+                      >{row.status}</span>
                     </span>
                   </div>
                   <div className="w-[120px] p-[8px] border-r border-sidebar-border truncate">{row.disbursementDate}</div>
@@ -557,12 +568,8 @@ export default function App() {
             <div className="flex-1 overflow-y-auto">
               <div className="flex flex-col px-[24px] py-[24px] gap-[24px] text-sm">
 
-                {/* クリニック / 決済番号 / 取引ID / ステータス */}
+                {/* 決済番号 / 取引ID / ステータス */}
                 <div className="flex flex-col gap-[12px]">
-                  <div className="flex justify-between gap-[8px]">
-                    <span className="whitespace-nowrap" style={{ color: 'rgba(0,0,0,0.88)' }}>クリニック</span>
-                    <span className="text-right">{detailRow.clinicName}</span>
-                  </div>
                   <div className="flex justify-between gap-[8px]">
                     <span className="whitespace-nowrap" style={{ color: 'rgba(0,0,0,0.88)' }}>決済番号</span>
                     <span
