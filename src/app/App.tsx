@@ -499,7 +499,7 @@ export default function App() {
                         onMouseEnter={(e) => showTooltip(
                           row.status === '完了' ? '精算金のお支払いが完了しました。' :
                           row.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
-                          row.status === '失敗' ? '(실패 사유)' : row.status,
+                          row.status === '失敗' ? '(失敗事由)' : row.status,
                           e
                         )}
                         onMouseLeave={() => setTooltip(null)}
@@ -599,7 +599,7 @@ export default function App() {
                         onMouseEnter={(e) => showTooltip(
                           detailRow.status === '完了' ? '精算金のお支払いが完了しました。' :
                           detailRow.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
-                          detailRow.status === '失敗' ? '(실패 사유)' : detailRow.status,
+                          detailRow.status === '失敗' ? '(失敗事由)' : detailRow.status,
                           e
                         )}
                         onMouseLeave={() => setTooltip(null)}
@@ -697,13 +697,11 @@ export default function App() {
       {/* ── Tooltip ── */}
       {tooltip && (
         <div
-          className="fixed z-[200] bg-foreground text-background text-[14px] rounded-md px-[10px] py-[6px] pointer-events-none shadow-md"
+          className="fixed z-[200] bg-foreground text-background text-[14px] rounded-md px-[10px] py-[6px] pointer-events-none shadow-md whitespace-nowrap"
           style={{
             left: tooltip.x,
             top: tooltip.y - 8,
             transform: 'translate(-50%, -100%)',
-            whiteSpace: 'pre-line',
-            maxWidth: '220px',
           }}
         >
           {tooltip.text}

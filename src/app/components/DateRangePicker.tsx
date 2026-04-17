@@ -27,7 +27,7 @@ export default function DateRangePicker({ value, onChange }: DateRangePickerProp
     ? value.to
       ? `${format(value.from, 'yyyy-MM-dd')} → ${format(value.to, 'yyyy-MM-dd')}`
       : format(value.from, 'yyyy-MM-dd')
-    : '날짜 선택';
+    : '日付選択';
 
   return (
     <div ref={ref} className="relative">
