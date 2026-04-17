@@ -188,10 +188,10 @@ export default function App() {
   const [detailRow, setDetailRow] = useState<AppPaymentRow | null>(null);
 
   // Tooltip
-  const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
-  const showTooltip = (text: string, e: React.MouseEvent) => {
+  const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number; align?: 'center' | 'right' } | null>(null);
+  const showTooltip = (text: string, e: React.MouseEvent, align?: 'center' | 'right') => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    setTooltip({ text, x: rect.left + rect.width / 2, y: rect.top });
+    setTooltip({ text, x: rect.left + rect.width / 2, y: rect.top, align });
   };
 
   // Filters
@@ -600,7 +600,7 @@ export default function App() {
                           detailRow.status === '完了' ? '精算金のお支払いが完了しました。' :
                           detailRow.status === '予定' ? '施術券を使用処理し、まもなくお支払いの予定です。' :
                           detailRow.status === '失敗' ? '(失敗事由)' : detailRow.status,
-                          e
+                          e, 'right'
                         )}
                         onMouseLeave={() => setTooltip(null)}
                       >{detailRow.status}</span>
@@ -697,11 +697,13 @@ export default function App() {
       {/* ── Tooltip ── */}
       {tooltip && (
         <div
-          className="fixed z-[200] bg-foreground text-background text-[14px] rounded-md px-[10px] py-[6px] pointer-events-none shadow-md whitespace-nowrap"
+          className="fixed z-[200] bg-foreground text-background text-[14px] rounded-md px-[10px] py-[6px] pointer-events-none shadow-md"
           style={{
             left: tooltip.x,
             top: tooltip.y - 8,
-            transform: 'translate(-50%, -100%)',
+            transform: tooltip.align === 'right' ? 'translate(-100%, -100%)' : 'translate(-50%, -100%)',
+            whiteSpace: 'pre-line',
+            maxWidth: '220px',
           }}
         >
           {tooltip.text}
