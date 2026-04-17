@@ -169,13 +169,9 @@ const sidebarMenus = [
   { label: '予約枠管理' },
   { label: '口コミの管理' },
   { label: '請求一覧' },
-  {
-    label: 'ポイント利用履歴',
-    children: [
-      { label: 'カード決済精算通知書', active: false },
-      { label: 'カード決済精算履歴', active: true },
-    ],
-  },
+  { label: 'ポイント利用履歴' },
+  { label: 'カード決済精算通知書' },
+  { label: 'カード決済精算履歴', active: true },
   { label: '入札形広告' },
 ];
 
@@ -183,7 +179,6 @@ const sidebarMenus = [
 export default function App() {
   const [allData, setAllData] = useState<AppPaymentRow[]>(initialAppPaymentData);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [expandedMenu, setExpandedMenu] = useState<string>('ポイント利用履歴');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Detail sheet
@@ -302,42 +297,16 @@ export default function App() {
           {isSidebarOpen && (
             <div className="pt-[12px] pb-[24px] px-[8px] flex flex-col gap-[4px]">
               {sidebarMenus.map((menu) => (
-                <div key={menu.label}>
-                  <button
-                    onClick={() => {
-                      if (menu.children) setExpandedMenu(expandedMenu === menu.label ? '' : menu.label);
-                    }}
-                    className={`w-full h-[32px] px-[12px] rounded-md text-left text-sidebar-foreground flex items-center justify-between ${
-                      menu.children ? 'hover:bg-muted' : 'text-muted-foreground cursor-default'
-                    }`}
-                  >
-                    <span>{menu.label}</span>
-                    {menu.children && (
-                      <svg
-                        className={`size-[12px] transition-transform ${expandedMenu === menu.label ? 'rotate-180' : ''}`}
-                        fill="none" viewBox="0 0 11.8748 8"
-                      >
-                        <path d={svgPaths.p5044900} fill="currentColor" className="text-muted-foreground" />
-                      </svg>
-                    )}
-                  </button>
-                  {menu.children && expandedMenu === menu.label && (
-                    <div className="flex flex-col gap-[2px] mt-[2px]">
-                      {menu.children.map((child) => (
-                        <button
-                          key={child.label}
-                          className={`w-full h-[32px] pl-[24px] pr-[12px] rounded-md text-left text-sm ${
-                            child.active
-                              ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                              : 'text-muted-foreground cursor-default'
-                          }`}
-                        >
-                          {child.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <button
+                  key={menu.label}
+                  className={`w-full h-[32px] px-[12px] rounded-md text-left text-sm ${
+                    menu.active
+                      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                      : 'text-muted-foreground cursor-default'
+                  }`}
+                >
+                  {menu.label}
+                </button>
               ))}
             </div>
           )}
@@ -350,8 +319,6 @@ export default function App() {
           <div className="px-[32px] py-[16px] border-b border-sidebar-border">
             <div className="flex items-center gap-[4px] mb-[8px]">
               <span className="text-muted-foreground px-[4px]">ホーム</span>
-              <span className="text-muted-foreground">/</span>
-              <span className="text-muted-foreground px-[4px]">ポイント利用履歴</span>
               <span className="text-muted-foreground">/</span>
               <span className="text-foreground px-[4px]">カード決済精算履歴</span>
             </div>
