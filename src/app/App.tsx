@@ -449,7 +449,7 @@ export default function App() {
               {/* Table Header */}
               <div className="bg-muted border-b border-sidebar-border flex text-sm">
                 <div className="w-[100px] p-[8px] border-r border-sidebar-border">決済番号</div>
-                <div className="w-[80px] p-[8px] border-r border-sidebar-border">ステータス</div>
+                <div className="w-[90px] p-[8px] border-r border-sidebar-border">ステータス</div>
                 <div className="w-[120px] p-[8px] border-r border-sidebar-border">支払日</div>
                 <div className="w-[120px] p-[8px] border-r border-sidebar-border">利用処理日</div>
                 <div className="w-[120px] p-[8px] border-r border-sidebar-border">決済日</div>
@@ -472,7 +472,7 @@ export default function App() {
                     onMouseLeave={() => setTooltip(null)}
                   >i</span>
                 </div>
-                <div className="w-[80px] p-[8px] border-r border-sidebar-border text-right">手数料率</div>
+                <div className="w-[90px] p-[8px] border-r border-sidebar-border text-right">手数料率</div>
                 <div className="w-[100px] p-[8px]">決済者</div>
               </div>
 
@@ -487,7 +487,7 @@ export default function App() {
                       {row.paymentNumber}
                     </button>
                   </div>
-                  <div className="w-[80px] p-[8px] border-r border-sidebar-border">
+                  <div className="w-[90px] p-[8px] border-r border-sidebar-border">
                     <span className="flex items-center gap-[6px]">
                       <span className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${
                         row.status === '完了' ? 'bg-green-500' :
@@ -512,7 +512,7 @@ export default function App() {
                   <div className="w-[130px] p-[8px] border-r border-sidebar-border text-right truncate">{row.settlementAmount}</div>
                   <div className="w-[110px] p-[8px] border-r border-sidebar-border text-right truncate">{row.usedPoints}</div>
                   <div className="w-[110px] p-[8px] border-r border-sidebar-border text-right truncate">{row.fee}</div>
-                  <div className="w-[80px] p-[8px] border-r border-sidebar-border text-right truncate">{row.feeRate}</div>
+                  <div className="w-[90px] p-[8px] border-r border-sidebar-border text-right truncate">{row.feeRate}</div>
                   <div className="w-[100px] p-[8px] truncate" onMouseEnter={(e) => showTooltip(row.payer, e)} onMouseLeave={() => setTooltip(null)}>{row.payer}</div>
                 </div>
               ))}
